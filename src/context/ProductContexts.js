@@ -1,29 +1,46 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const ProductContext = createContext();
 
-const ProductContextProvider = ({children}) => {
-    const [items,setItems] = useState([])
+const ProductContextProvider = ({ children }) => {
 
-    const removeItem = (id)=>{
-        setItems(items.filter((item)=>item.id !== id))
+  
+  const defaultItems = () => {
+    let cart = [];
+    for (let i = 1; i <= 20; i++) {
+      cart[i] = 0;
     }
+    return cart;
+  };
+  const [items, setItems] = useState([]);
+  const [itemsCount, setItemsCount] = useState(defaultItems());
 
-    const addItem = (item)=>{
-        setItems([...items,item])
-    }
+
+  useEffect(()=>{
+    
+  })
+  const removeItem = (id) => {
+    setItems(items.filter((item) => item.id !== id));
+    setItemsCount({ ...itemsCount, [id]: itemsCount[id] - 1 });
+  };
+
+  const addItem = (item) => {
+    setItems([...items, item]);
+    setItemsCount({ ...itemsCount, [item.id]: itemsCount[item.id] + 1 });
+  };
+
 
   const values = {
     items,
     setItems,
     removeItem,
-    addItem
+    addItem,
+    itemsCount,
+    setItemsCount,
   };
 
   return (
-    <ProductContext.Provider value={values}>
-        {children}
-    </ProductContext.Provider>
+    <ProductContext.Provider value={values}>{children}</ProductContext.Provider>
   );
 };
 
