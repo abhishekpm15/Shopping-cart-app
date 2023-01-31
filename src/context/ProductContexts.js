@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext,  useEffect,  useState } from "react";
 
 export const ProductContext = createContext();
 
@@ -13,12 +13,9 @@ const ProductContextProvider = ({ children }) => {
     return cart;
   };
   const [items, setItems] = useState([]);
+
   const [itemsCount, setItemsCount] = useState(defaultItems());
 
-
-  useEffect(()=>{
-    
-  })
   const removeItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
     setItemsCount({ ...itemsCount, [id]: itemsCount[id] - 1 });
