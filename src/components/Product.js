@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import axios from "axios";
 import {
@@ -12,15 +14,14 @@ import {
 } from "@material-tailwind/react";
 import { ProductContext } from "../context/ProductContexts";
 const Products = () => {
+  const [loading, setLoading] = useState(true);
   const { addItem } = useContext(ProductContext);
-  
-  const addItemsToCart = (id) =>{
-    console.log(id)
-    addItem(id)
-    toast.success("Added to cart", {
-    });
 
-  }
+  const addItemsToCart = (id) => {
+    console.log(id);
+    addItem(id);
+    toast.success("Added to cart", {});
+  };
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
@@ -28,6 +29,7 @@ const Products = () => {
       .then((response) => {
         console.log(response.data);
         setProducts(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -37,6 +39,7 @@ const Products = () => {
   return (
     <div>
       <ToastContainer />
+      
       <div className="flex flex-wrap justify-center space-x-5 space-y-5">
         {products.map((product) => {
           return (
@@ -55,7 +58,12 @@ const Products = () => {
                 <p className="text-sm font-bold w-56">${product.price}</p>
               </Typography>
               <CardFooter>
-                <button className="bg-green-400 rounded-lg px-3 py-2 mt-2 transition hover:scale-110 text-white" onClick={()=>{addItemsToCart(product)}}>
+                <button
+                  className="bg-green-400 rounded-lg px-3 py-2 mt-2 transition hover:scale-110 text-white"
+                  onClick={() => {
+                    addItemsToCart(product);
+                  }}
+                >
                   Add to Cart
                 </button>
               </CardFooter>
