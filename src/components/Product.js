@@ -39,7 +39,6 @@ const Products = () => {
   return (
     <div>
       <ToastContainer />
-      
       <div className="flex flex-wrap justify-center space-x-5 space-y-5">
         {products.map((product) => {
           return (
