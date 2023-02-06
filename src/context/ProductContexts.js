@@ -24,7 +24,8 @@ const ProductContextProvider = ({ children }) => {
   const addItem = (item) => {
     setItemsCount({ ...itemsCount, [item.id]: itemsCount[item.id] + 1 });
     if(items.findIndex((it)=> item.id === it.id) === -1){
-      setItems([...items, item]);}
+      setItems([...items, item]);
+    }
   };
 
 
